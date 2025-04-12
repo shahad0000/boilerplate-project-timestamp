@@ -4,6 +4,7 @@
 // init project
 var express = require('express');
 var app = express();
+var date = new Date();
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -24,6 +25,11 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get('/api/:date', (req, res) => {
+  d = req.params.date;
+  if (!isNaN(d) && d.length === 13) d = new Date(parseInt(d));
+  res.json({unix: Date.parse(d), utc: new Date(d).toUTCString()});
+});
 
 
 // Listen on port set in environment variable or default to 3000
